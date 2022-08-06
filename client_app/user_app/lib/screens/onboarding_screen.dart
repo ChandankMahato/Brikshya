@@ -14,9 +14,17 @@ class OnBoarding extends StatefulWidget {
 }
 
 class _OnBoardingState extends State<OnBoarding> {
+  Map<String, dynamic> boardingContent = {
+    'image': 'images/onboarding/splash1.png',
+    'title': 'Welcome to Brikshya',
+    'description':
+        'One-stop platform to buy and sell nursery items, Join events and training, and employment services',
+  };
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    final board = OnBoardingContent.fromData(data: boardingContent);
     return Scaffold(
       backgroundColor: kWhiteColor,
       body: Column(
@@ -33,13 +41,13 @@ class _OnBoardingState extends State<OnBoarding> {
                   SizedBox(
                     height: size.height / 3,
                     width: size.width * 0.75,
-                    child: Image.asset(onBoardingContents[1].image),
+                    child: Image.asset(board.image),
                   ),
                   const SizedBox(
                     height: 48,
                   ),
                   Text(
-                    onBoardingContents[1].title,
+                    board.title,
                     style: const TextStyle(
                       fontSize: 28,
                       fontFamily: 'RedHatDisplay',
@@ -50,7 +58,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     height: 24,
                   ),
                   Text(
-                    onBoardingContents[1].description,
+                    board.description,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 20,
@@ -100,39 +108,3 @@ class _OnBoardingState extends State<OnBoarding> {
     );
   }
 }
-
-
-// decoration: BoxDecoration(
-//                         color: Colors.grey[300],
-//                         shape: BoxShape.rectangle,
-//                         borderRadius: BorderRadius.circular(10),
-//                         boxShadow: const [
-//                           BoxShadow(
-//                             color: Colors.white,
-//                             offset: Offset(0, -4),
-//                             blurRadius: 15.0,
-//                             spreadRadius: 1.0,
-//                           ),
-//                           BoxShadow(
-//                             color: Color.fromARGB(255, 117, 117, 117),
-//                             offset: Offset(0, 4),
-//                             blurRadius: 15.0,
-//                             spreadRadius: 1.0,
-//                           ),
-//                         ],
-//                         gradient: const LinearGradient(
-//                             begin: Alignment.topCenter,
-//                             end: Alignment.bottomCenter,
-//                             colors: [
-//                               Color.fromARGB(255, 238, 238, 238),
-//                               Color.fromARGB(255, 224, 224, 224),
-//                               Color.fromARGB(255, 189, 189, 189),
-//                               Color.fromARGB(255, 158, 158, 158),
-//                             ],
-//                             stops: [
-//                               0.1,
-//                               0.3,
-//                               0.8,
-//                               0.9
-//                             ]),
-//                       ),

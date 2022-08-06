@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:user_app/components/appbar.dart';
+import 'package:user_app/components/banner.dart';
+import 'package:user_app/components/category.dart';
+import 'package:user_app/components/footer.dart';
+import 'package:user_app/components/popular.dart';
+import 'package:user_app/components/product.dart';
 import 'package:user_app/constants.dart';
 import 'package:user_app/main.dart';
 import 'package:user_app/models/onboarding_content.dart';
@@ -13,99 +19,75 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool _showBackToTopButton = false;
+
+  // scroll controller
+  late ScrollController _scrollController;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController()
+      ..addListener(() {
+        setState(() {
+          if (_scrollController.offset >= 200) {
+            _showBackToTopButton = true; // show the back-to-top button
+          } else {
+            _showBackToTopButton = false; // hide the back-to-top button
+          }
+        });
+      });
+
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose(); // dispose the controller
+    super.dispose();
+  }
+
+  // This function is triggered when the user presses the back-to-top button
+  void _scrollToTop() {
+    _scrollController.animateTo(0,
+        duration: const Duration(seconds: 1), curve: Curves.linear);
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kWhiteColor,
-      appBar: AppBar(
-        backgroundColor: kWhiteColor,
-        toolbarHeight: 80,
-        leadingWidth: 72,
-        leading: Padding(
-          padding: const EdgeInsets.only(left: 20),
-          child: Image.asset(
-            onBoardingContents[0].image,
-          ),
-        ),
-        title: Text(
-          'Brikshya',
-          style: kAppName.copyWith(
-            color: kMediumGreenColor,
-            fontWeight: FontWeight.w600,
-            fontFamily: 'RedHatDisplay',
-            fontSize: 24,
-          ),
-        ),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.favorite_border_rounded),
-            color: kLightGreenColor,
-            iconSize: 32,
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.add_shopping_cart_rounded),
-            color: kLightGreenColor,
-            iconSize: 32,
-            onPressed: () {},
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: IconButton(
-              icon: const Icon(Icons.search_rounded),
-              color: kLightGreenColor,
-              iconSize: 32,
-              onPressed: () {},
-            ),
-          ),
-        ],
+      appBar: const PreferredSize(
+        preferredSize: Size.fromHeight(80),
+        child: CustomAppBar(),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Neumorphic(
-          style: const NeumorphicStyle(
-            border: NeumorphicBorder(width: 1),
-            depth: -5,
-            boxShape: NeumorphicBoxShape.stadium(),
-            shadowLightColorEmboss: Colors.white,
-            shadowDarkColorEmboss: Color.fromARGB(255, 162, 162, 162),
-            oppositeShadowLightSource: false,
-            intensity: 10,
-            surfaceIntensity: 0.25,
-            lightSource: LightSource.top,
-          ),
-          child: Container(
-            height: 48,
-            width: (16 * 1.2 * 16 / 2 + 96).toDouble(),
-            color: Colors.white,
-            child: Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 24.0),
-                  child: SizedBox(
-                    height: 32,
-                    width: 32,
-                    child: Image.asset('images/categorys/cactus.png'),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(left: 24.0),
-                  child: Text(
-                    'Decorative Plant',
-                    style: TextStyle(
-                      color: kBlackColor,
-                      fontFamily: 'Ubuntu',
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: const [
+              CustomBanner(),
+              CategorysWidget(),
+              PopularWdiget(),
+              ProductWidget(),
+              FooterWidget(),
+            ],
           ),
         ),
       ),
+      floatingActionButton: _showBackToTopButton == false
+          ? null
+          : Padding(
+              padding: const EdgeInsets.only(bottom: 64.0),
+              child: FloatingActionButton(
+                onPressed: _scrollToTop,
+                backgroundColor: kOrangeColor,
+                child: const Icon(
+                  Icons.arrow_upward,
+                ),
+              ),
+            ),
     );
   }
 }

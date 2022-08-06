@@ -42,7 +42,7 @@ class _SplashScreenState extends State<SplashScreen> {
           ),
           Center(
             child: Text(
-              onBoardingContents[0].title,
+              splashContents[0].title,
               style: kAppName.copyWith(
                 color: kMediumGreenColor,
                 fontWeight: FontWeight.w900,
@@ -57,7 +57,7 @@ class _SplashScreenState extends State<SplashScreen> {
           SizedBox(
             height: size.height / 3,
             width: size.width * 0.75,
-            child: Image.asset(onBoardingContents[0].image),
+            child: Image.asset(splashContents[0].image),
           ),
           Expanded(
             child: Align(
@@ -67,7 +67,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 50,
                 child: Center(
                   child: Text(
-                    onBoardingContents[0].description,
+                    splashContents[0].description,
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: kWhiteColor,

@@ -27,6 +27,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  badges: ^2.0.3
+  carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
   flutter:
     sdk: flutter
@@ -52,6 +54,31 @@ flutter:
     - images/onboarding/logo.png
     - images/onboarding/splash1.png
     - images/categorys/cactus.png
+    - images/banners/banner1.png
+    - images/banners/banner2.png
+    - images/banners/banner3.jpg
+    - images/banners/banner4.jpg
+    - images/banners/banner5.jpg
+    - images/categorys/bonsai.png
+    - images/categorys/cactus.png
+    - images/categorys/decorative.png
+    - images/categorys/garden.png
+    - images/categorys/hanging.png
+    - images/categorys/office.jpg
+    - images/categorys/ornamental.png
+    - images/popular/popular1.png
+    - images/popular/popular2.png
+    - images/popular/popular3.png
+    - images/popular/popular4.png
+    - images/popular/popular5.jpg
+    - images/products/product1.png
+    - images/products/product2.png
+    - images/products/product3.jpg
+    - images/products/product4.png
+    - images/products/product5.png
+    - images/products/product6.png
+    - images/products/product7.png
+    - images/products/product8.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
