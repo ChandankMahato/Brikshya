@@ -1,6 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:user_app/constants.dart';
-import 'package:user_app/models/category_content.dart';
+import 'package:user_app/models/category_model.dart';
 
 class CategorysWidget extends StatefulWidget {
   const CategorysWidget({Key? key}) : super(key: key);
@@ -22,6 +22,7 @@ class _CategorysWidgetState extends State<CategorysWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
@@ -30,39 +31,43 @@ class _CategorysWidgetState extends State<CategorysWidget> {
             top: 24,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: size.width > 850
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Category',
                 style: kAppName.copyWith(
-                  color: kLightGreenColor,
+                  color: kDarkGreenColor,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'RedHatDisplay',
                   fontSize: 24,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Text(
-                      'See All',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.forward_sharp,
+              size.width < 850
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'See All',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.forward_sharp,
+                            ),
+                            color: kDarkGreenColor,
+                            iconSize: 24,
+                            onPressed: () {},
+                          ),
+                        ],
                       ),
-                      color: kMediumGreenColor,
-                      iconSize: 24,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -79,7 +84,7 @@ class _CategorysWidgetState extends State<CategorysWidget> {
               itemCount: categorys.length,
               itemBuilder: (context, index) {
                 final category = Categorys.fromData(data: categorys[index]);
-                return GestureDetector(
+                return InkWell(
                   onTap: () {
                     print('Category Clicked');
                   },
@@ -104,7 +109,7 @@ class _CategorysWidgetState extends State<CategorysWidget> {
                             oppositeShadowLightSource: false,
                             intensity: 1,
                             surfaceIntensity: 0.25,
-                            lightSource: LightSource.topLeft,
+                            lightSource: LightSource.top,
                             color: kWhiteColor,
                           ),
                           child: Row(

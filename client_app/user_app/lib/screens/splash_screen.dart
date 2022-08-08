@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:user_app/constants.dart';
 import 'package:user_app/main.dart';
-import 'package:user_app/models/onboarding_content.dart';
+import 'package:user_app/models/onboarding_model.dart';
 import 'package:user_app/screens/onboarding_screen.dart';
 
 class SplashScreen extends StatefulWidget {

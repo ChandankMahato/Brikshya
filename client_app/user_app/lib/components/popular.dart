@@ -1,6 +1,6 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:user_app/constants.dart';
-import 'package:user_app/models/popular_content.dart';
+import 'package:user_app/models/popular_model.dart';
 
 class PopularWdiget extends StatefulWidget {
   const PopularWdiget({Key? key}) : super(key: key);
@@ -20,6 +20,7 @@ class _PopularWdigetState extends State<PopularWdiget> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
@@ -28,39 +29,43 @@ class _PopularWdigetState extends State<PopularWdiget> {
             top: 24,
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: size.width > 850
+                ? MainAxisAlignment.center
+                : MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Populars',
                 style: kAppName.copyWith(
-                  color: kLightGreenColor,
+                  color: kDarkGreenColor,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'RedHatDisplay',
                   fontSize: 24,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    const Text(
-                      'See All',
-                      style: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black54),
-                    ),
-                    IconButton(
-                      icon: const Icon(
-                        Icons.forward_sharp,
+              size.width < 850
+                  ? Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          const Text(
+                            'See All',
+                            style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black54),
+                          ),
+                          IconButton(
+                            icon: const Icon(
+                              Icons.forward_sharp,
+                            ),
+                            color: kDarkGreenColor,
+                            iconSize: 24,
+                            onPressed: () {},
+                          ),
+                        ],
                       ),
-                      color: kMediumGreenColor,
-                      iconSize: 24,
-                      onPressed: () {},
-                    ),
-                  ],
-                ),
-              ),
+                    )
+                  : Container(),
             ],
           ),
         ),
@@ -77,7 +82,7 @@ class _PopularWdigetState extends State<PopularWdiget> {
               itemCount: populars.length,
               itemBuilder: (context, index) {
                 final popular = Populars.fromData(data: populars[index]);
-                return GestureDetector(
+                return InkWell(
                   onTap: () {
                     print('Popular Clicked');
                   },
@@ -102,7 +107,7 @@ class _PopularWdigetState extends State<PopularWdiget> {
                             oppositeShadowLightSource: false,
                             intensity: 1,
                             surfaceIntensity: 0.25,
-                            lightSource: LightSource.topLeft,
+                            lightSource: LightSource.top,
                             color: kWhiteColor,
                           ),
                           child: Image.asset(

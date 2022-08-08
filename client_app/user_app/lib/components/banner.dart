@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:user_app/models/banner_content.dart';
+import 'package:user_app/models/banner_model.dart';
 
 class CustomBanner extends StatelessWidget {
   const CustomBanner({Key? key}) : super(key: key);
@@ -24,7 +24,11 @@ class CustomBanner extends StatelessWidget {
           return buildImage(banner.image, index);
         },
         options: CarouselOptions(
-          height: size.height / 3.5,
+          height: size.width > 650
+              ? size.width > 850
+                  ? 675
+                  : 300
+              : 200,
           autoPlay: true,
           viewportFraction: 1,
         ),

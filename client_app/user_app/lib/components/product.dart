@@ -1,6 +1,10 @@
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:provider/provider.dart';
+import 'package:user_app/Database/db_helper.dart';
 import 'package:user_app/constants.dart';
-import 'package:user_app/models/product_content.dart';
+import 'package:user_app/models/cart_model.dart';
+import 'package:user_app/models/product_model.dart';
+import 'package:user_app/provider/cart_provider.dart';
 
 class ProductWidget extends StatefulWidget {
   const ProductWidget({Key? key}) : super(key: key);
@@ -10,7 +14,11 @@ class ProductWidget extends StatefulWidget {
 }
 
 class _ProductWidgetState extends State<ProductWidget> {
+  DBHelper dbHelper = DBHelper();
+
   int _productCount = 4;
+
+  List<Products> _favoriteProducts = [];
 
   _increaseProductCount() {
     setState(() {
@@ -18,60 +26,88 @@ class _ProductWidgetState extends State<ProductWidget> {
     });
   }
 
+  void _toggleFavorite(Products product, String productId) {
+    final existingIndex = _favoriteProducts
+        .indexWhere((product) => product.productId == productId);
+    print(existingIndex);
+    if (existingIndex >= 0) {
+      setState(() {
+        _favoriteProducts.removeAt(existingIndex);
+      });
+    } else {
+      setState(() {
+        _favoriteProducts.add(product);
+      });
+    }
+  }
+
+  bool _isProductFavorite(String productId) {
+    return _favoriteProducts.any((product) => product.productId == productId);
+  }
+
   List products = [
     {
-      'image': 'images/products/product1.png',
-      'name': 'Office Plant',
-      'price': 200,
+      'productId': '1',
+      'productImage': 'images/products/product1.png',
+      'productName': 'Office Plant',
+      'productPrice': 200,
       'favourite': true,
     },
     {
-      'image': 'images/products/product2.png',
-      'name': 'Litchi Tree',
-      'price': 150,
+      'productId': '2',
+      'productImage': 'images/products/product2.png',
+      'productName': 'Litchi Tree',
+      'productPrice': 150,
       'favourite': false,
     },
     {
-      'image': 'images/products/product3.jpg',
-      'name': 'Coconut Tree',
-      'price': 300,
+      'productId': '3',
+      'productImage': 'images/products/product3.jpg',
+      'productName': 'Coconut Tree',
+      'productPrice': 300,
       'favourite': true,
     },
     {
-      'image': 'images/products/product4.png',
-      'name': 'Mango Tree',
-      'price': 100,
+      'productId': '4',
+      'productImage': 'images/products/product4.png',
+      'productName': 'Mango Tree',
+      'productPrice': 100,
       'favourite': false,
     },
     {
-      'image': 'images/products/product5.png',
-      'name': 'Lemon Tree',
-      'price': 50,
+      'productId': '5',
+      'productImage': 'images/products/product5.png',
+      'productName': 'Lemon Tree',
+      'productPrice': 50,
       'favourite': false,
     },
     {
-      'image': 'images/products/product6.png',
-      'name': 'Bonsai Tree',
-      'price': 2000,
+      'productId': '6',
+      'productImage': 'images/products/product6.png',
+      'productName': 'Bonsai Tree',
+      'productPrice': 2000,
       'favourite': true,
     },
     {
-      'image': 'images/products/product7.png',
-      'name': 'Cactus',
-      'price': 600,
+      'productId': '7',
+      'productImage': 'images/products/product7.png',
+      'productName': 'Cactus',
+      'productPrice': 600,
       'favourite': false,
     },
     {
-      'image': 'images/products/product8.png',
-      'name': 'Decorative Plant',
-      'price': 1000,
+      'productId': '8',
+      'productImage': 'images/products/product8.png',
+      'productName': 'Decorative Plant',
+      'productPrice': 1000,
       'favourite': false,
     },
   ];
 
-  Widget _buildContent(index) {
+  Widget _buildContent(index, size) {
     final product = Products.fromData(data: products[index]);
-    return GestureDetector(
+    final cart = Provider.of<CartProvider>(context);
+    return InkWell(
       onTap: () {
         print('Product Clicked');
       },
@@ -93,68 +129,189 @@ class _ProductWidgetState extends State<ProductWidget> {
             oppositeShadowLightSource: false,
             intensity: 1,
             surfaceIntensity: 0.25,
-            lightSource: LightSource.topLeft,
+            lightSource: LightSource.top,
             color: kWhiteColor,
           ),
           child: Column(
             children: [
-              Image.asset(
-                product.image,
-                height: 144,
-                width: 180,
-              ),
+              size.width >= 500
+                  ? Image.asset(
+                      product.productImage,
+                      height: 144,
+                      width: 180,
+                    )
+                  : Image.asset(
+                      product.productImage,
+                      height: 128,
+                      width: 164,
+                    ),
               Text(
-                product.name,
+                product.productName,
                 style: kAppName.copyWith(
-                  color: kLightGreenColor,
+                  color: kMediumGreenColor,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'RedHatDisplay',
-                  fontSize: 20,
+                  fontSize: size.width >= 500 ? 20 : 16,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 8.0, left: 8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Rs ' + (product.price).toString(),
-                      style: kAppName.copyWith(
-                        color: kLightGreenColor,
-                        fontWeight: FontWeight.bold,
-                        fontFamily: 'RedHatDisplay',
-                        fontSize: 20,
-                      ),
-                    ),
-                    Row(
-                      children: [
-                        product.favourite == true
-                            ? IconButton(
-                                icon: const Icon(Icons.favorite_rounded),
-                                color: kOrangeColor,
-                                iconSize: 24,
-                                tooltip: 'Remove from Favorite',
-                                onPressed: () {},
-                              )
-                            : IconButton(
-                                icon:
-                                    const Icon(Icons.favorite_outline_rounded),
-                                color: kLightGreenColor,
-                                iconSize: 24,
-                                tooltip: 'Add to Favorite',
-                                onPressed: () {},
-                              ),
-                        IconButton(
-                          icon: const Icon(Icons.add_shopping_cart_rounded),
-                          color: kLightGreenColor,
-                          iconSize: 32,
-                          tooltip: 'Add to Cart',
-                          onPressed: () {},
-                        ),
-                      ],
-                    ),
-                  ],
+                padding: EdgeInsets.only(
+                  top: size.width >= 500 ? 16.0 : 8.0,
+                  left: 16.0,
+                  right: 8.0,
                 ),
+                child: size.width >= 500
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Rs ' + (product.productPrice).toString(),
+                            style: kAppName.copyWith(
+                              color: kMediumGreenColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'RedHatDisplay',
+                              fontSize: 20,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              _isProductFavorite(product.productId)
+                                  ? IconButton(
+                                      icon: const Icon(Icons.favorite_rounded),
+                                      color: kOrangeColor,
+                                      iconSize: 32,
+                                      tooltip: 'Remove from Favorite',
+                                      onPressed: () {
+                                        _toggleFavorite(
+                                            product, product.productId);
+                                      },
+                                    )
+                                  : IconButton(
+                                      icon: const Icon(
+                                          Icons.favorite_outline_rounded),
+                                      color: kMediumGreenColor,
+                                      iconSize: 32,
+                                      tooltip: 'Add to Favorite',
+                                      onPressed: () {
+                                        _toggleFavorite(
+                                            product, product.productId);
+                                      },
+                                    ),
+                              IconButton(
+                                icon:
+                                    const Icon(Icons.add_shopping_cart_rounded),
+                                color: kMediumGreenColor,
+                                iconSize: 32,
+                                tooltip: 'Add to Cart',
+                                onPressed: () {
+                                  dbHelper
+                                      .insert(
+                                    Cart(
+                                      itemId: index.toString(),
+                                      productId: product.productId.toString(),
+                                      productImage:
+                                          product.productImage.toString(),
+                                      productName:
+                                          product.productName.toString(),
+                                      initialPrice:
+                                          product.productPrice.toInt(),
+                                      productPrice:
+                                          product.productPrice.toInt(),
+                                      productQuantity: 1,
+                                    ),
+                                  )
+                                      .then((value) {
+                                    cart.addTotalPrice(double.parse(
+                                        product.productPrice.toString()));
+                                    cart.addCartItemCount();
+                                    print('product is added to cart');
+                                  }).onError((error, stackTrace) {
+                                    print(error.toString());
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    : Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Rs ' + (product.productPrice).toString(),
+                            style: kAppName.copyWith(
+                              color: kMediumGreenColor,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'RedHatDisplay',
+                              fontSize: 16,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 0.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                _isProductFavorite(product.productId)
+                                    ? IconButton(
+                                        icon:
+                                            const Icon(Icons.favorite_rounded),
+                                        color: kOrangeColor,
+                                        iconSize: 24,
+                                        tooltip: 'Remove from Favorite',
+                                        onPressed: () {
+                                          _toggleFavorite(
+                                              product, product.productId);
+                                        },
+                                      )
+                                    : IconButton(
+                                        icon: const Icon(
+                                            Icons.favorite_outline_rounded),
+                                        color: kMediumGreenColor,
+                                        iconSize: 24,
+                                        tooltip: 'Add to Favorite',
+                                        onPressed: () {
+                                          _toggleFavorite(
+                                              product, product.productId);
+                                        },
+                                      ),
+                                IconButton(
+                                  icon: const Icon(
+                                      Icons.add_shopping_cart_rounded),
+                                  color: kMediumGreenColor,
+                                  iconSize: 24,
+                                  tooltip: 'Add to Cart',
+                                  onPressed: () {
+                                    dbHelper
+                                        .insert(
+                                      Cart(
+                                          itemId: index.toString(),
+                                          productId:
+                                              product.productId.toString(),
+                                          productImage:
+                                              product.productImage.toString(),
+                                          productName:
+                                              product.productName.toString(),
+                                          initialPrice:
+                                              product.productPrice.toInt(),
+                                          productPrice:
+                                              product.productPrice.toInt(),
+                                          productQuantity: 1),
+                                    )
+                                        .then((value) {
+                                      cart.addTotalPrice(double.parse(
+                                          product.productPrice.toString()));
+                                      cart.addCartItemCount();
+                                      print('product is added to cart');
+                                    }).onError((error, stackTrace) {
+                                      print(error.toString());
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
               )
             ],
           ),
@@ -165,6 +322,7 @@ class _ProductWidgetState extends State<ProductWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Column(
       children: [
         Padding(
@@ -172,19 +330,18 @@ class _ProductWidgetState extends State<ProductWidget> {
             left: 16,
             top: 24,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Products',
-                style: kAppName.copyWith(
-                  color: kLightGreenColor,
-                  fontWeight: FontWeight.w600,
-                  fontFamily: 'RedHatDisplay',
-                  fontSize: 24,
-                ),
+          child: Align(
+            alignment:
+                size.width > 850 ? Alignment.center : Alignment.centerLeft,
+            child: Text(
+              'Products',
+              style: kAppName.copyWith(
+                color: kDarkGreenColor,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'RedHatDisplay',
+                fontSize: 24,
               ),
-            ],
+            ),
           ),
         ),
         Column(
@@ -193,21 +350,26 @@ class _ProductWidgetState extends State<ProductWidget> {
               padding: const EdgeInsets.only(
                 left: 12.0,
                 right: 12.0,
+                top: 8.0,
               ),
               child: GridView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisExtent: 260,
-                  crossAxisCount: 2,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisExtent: size.width >= 500 ? 260 : 245,
+                  crossAxisCount: size.width > 650
+                      ? size.width > 850
+                          ? 4
+                          : 3
+                      : 2,
                 ),
                 itemCount: _productCount > products.length
                     ? products.length
                     : _productCount,
-                itemBuilder: (context, index) => _buildContent(index),
+                itemBuilder: (context, index) => _buildContent(index, size),
               ),
             ),
-            GestureDetector(
+            InkWell(
               onTap: _increaseProductCount,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,

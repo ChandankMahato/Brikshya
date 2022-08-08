@@ -8,7 +8,7 @@ import 'package:user_app/components/popular.dart';
 import 'package:user_app/components/product.dart';
 import 'package:user_app/constants.dart';
 import 'package:user_app/main.dart';
-import 'package:user_app/models/onboarding_content.dart';
+import 'package:user_app/models/onboarding_model.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
