@@ -1,8 +1,10 @@
-class Categorys {
-  late String image;
+class Categories {
+  late String id;
+  late String? image;
   late String title;
 
-  Categorys.fromData({required Map<String, dynamic> data}) {
+  Categories.fromData({required Map<String, dynamic> data}) {
+    id = data["_id"];
     image = data['image'];
     title = data['title'];
   }

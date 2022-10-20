@@ -1,41 +1,36 @@
+import 'package:user_app/secrets/secrets.dart';
+
 class Cart {
-  late String itemId;
-  late String productId;
-  late String productImage;
-  late String productName;
-  late int initialPrice;
-  late int productPrice;
-  late int productQuantity;
+  late String product;
+  late int quantity;
 
   Cart({
-    required this.itemId,
-    required this.productId,
-    required this.productName,
-    required this.initialPrice,
-    required this.productPrice,
-    required this.productImage,
-    required this.productQuantity,
+    required this.product,
+    required this.quantity,
   });
 
-  Cart.fromMap(Map<dynamic, dynamic> data) {
-    itemId = data['itemId'];
-    productId = data['productId'];
-    productImage = data['productImage'];
-    productName = data['productName'];
-    initialPrice = data['initialPrice'];
-    productPrice = data['productPrice'];
-    productQuantity = data['productQuantity'];
+  Cart.fromData({required Map<String, dynamic> data}) {
+    product = data['product'];
+    quantity = data['quantity'];
   }
+}
 
-  Map<String, Object> toMap() {
-    return {
-      'itemId': itemId,
-      'productId': productId,
-      'productImage': productImage,
-      'productName': productName,
-      'initialPrice': initialPrice,
-      'productPrice': productPrice,
-      'productQuantity': productQuantity
-    };
+class CartProduct {
+  late String productId;
+  late int productQuantity;
+  late String productImage;
+  late String productName;
+  late String productCategory;
+  late int productPrice;
+  late String productDescription;
+
+  CartProduct.fromData({required Map<String, dynamic> data}) {
+    productId = data['_id'];
+    productQuantity = data['quantity'];
+    productImage = data['image'];
+    productName = data['name'];
+    productCategory = data['category'];
+    productPrice = data['price'];
+    productDescription = data['description'];
   }
 }

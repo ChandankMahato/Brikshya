@@ -15,7 +15,7 @@ class OnBoarding extends StatefulWidget {
 
 class _OnBoardingState extends State<OnBoarding> {
   Map<String, dynamic> boardingContent = {
-    'image': 'images/onboarding/splash1.png',
+    'image': 'images/splash1.png',
     'title': 'Welcome to Brikshya',
     'description':
         'One-stop platform to buy and sell nursery items, Join events and training, and employment services',
@@ -50,7 +50,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     board.title,
                     style: const TextStyle(
                       fontSize: 28,
-                      fontFamily: 'RedHatDisplay',
+                      fontFamily: redhat,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -62,7 +62,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 20,
-                      fontFamily: 'Ubuntu',
+                      fontFamily: ubuntu,
                     ),
                   ),
                   Expanded(
@@ -85,6 +85,8 @@ class _OnBoardingState extends State<OnBoarding> {
                             size: 40,
                           ),
                           onPressed: () {
+                            // navigatorKey.currentState!.pushNamedAndRemoveUntil(
+                            //     Signup.id, (route) => false);
                             navigatorKey.currentState!.pushNamedAndRemoveUntil(
                                 Home.id, (route) => false);
                           },

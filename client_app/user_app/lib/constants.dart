@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 const TextStyle kTextFieldLabelStyle = TextStyle(
   color: kLightRedColor,
-  fontFamily: 'RedHatDisplay',
+  fontFamily: redhat,
   fontSize: 15.0,
 );
 
 const TextStyle kButtonContentTextStyle = TextStyle(
   color: kWhiteColor,
-  fontFamily: 'RedHatDisplay',
+  fontFamily: redhat,
   fontSize: 15.0,
   fontWeight: FontWeight.bold,
   letterSpacing: 1.2,
@@ -17,7 +17,7 @@ const TextStyle kButtonContentTextStyle = TextStyle(
 const TextStyle kTextFieldTextStyle = TextStyle(
   fontSize: 18.0,
   fontWeight: FontWeight.w700,
-  fontFamily: 'RedHatDisplay',
+  fontFamily: redhat,
   color: Colors.black,
 );
 
@@ -25,7 +25,7 @@ const TextStyle kAppName = TextStyle(
   color: kMediumGreenColor,
   fontSize: 180.0,
   fontWeight: FontWeight.bold,
-  fontFamily: 'RedHatDisplay',
+  fontFamily: redhat,
 );
 
 const Color kGreyLightColor = Color.fromARGB(255, 242, 242, 242);

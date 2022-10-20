@@ -9,11 +9,11 @@ class CustomBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     List banners = [
-      {'image': 'images/banners/banner1.png'},
-      {'image': 'images/banners/banner2.png'},
-      {'image': 'images/banners/banner3.jpg'},
-      {'image': 'images/banners/banner4.jpg'},
-      {'image': 'images/banners/banner5.jpg'},
+      {'image': 'images/banner1.png'},
+      {'image': 'images/banner2.png'},
+      {'image': 'images/banner3.jpg'},
+      {'image': 'images/banner4.jpg'},
+      {'image': 'images/banner5.jpg'},
     ];
 
     return Center(

@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:user_app/constants.dart';
 import 'package:user_app/main.dart';
 import 'package:user_app/models/onboarding_model.dart';
+import 'package:user_app/provider/location_state.dart';
+import 'package:user_app/provider/logged_in_state.dart';
 import 'package:user_app/screens/onboarding_screen.dart';
+import 'package:user_app/services/location.dart';
+import 'package:user_app/services/storage.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -22,7 +27,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   _navigateToHome() async {
-    await Future.delayed(const Duration(milliseconds: 5000), () {});
+    bool? isLoggedIn = await Storage.isLoggedIn();
+    Provider.of<LoggedInState>(context, listen: false).changeState(isLoggedIn!);
+    Provider.of<LocationState>(context, listen: false)
+        .changeState(await Location.locationServiceEnabled());
+    await Future.delayed(const Duration(milliseconds: 3000), () {});
     await navigatorKey.currentState!
         .pushNamedAndRemoveUntil(OnBoarding.id, (route) => false);
   }
@@ -44,9 +53,9 @@ class _SplashScreenState extends State<SplashScreen> {
             child: Text(
               splashContents[0].title,
               style: kAppName.copyWith(
-                color: kMediumGreenColor,
+                color: kDarkGreenColor,
                 fontWeight: FontWeight.w900,
-                fontFamily: 'RedHatDisplay',
+                fontFamily: redhat,
                 fontSize: 35,
               ),
             ),
@@ -71,8 +80,8 @@ class _SplashScreenState extends State<SplashScreen> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       color: kWhiteColor,
-                      fontFamily: 'Ubuntu',
-                      fontSize: 30,
+                      fontFamily: ubuntu,
+                      fontSize: 24,
                     ),
                   ),
                 ),

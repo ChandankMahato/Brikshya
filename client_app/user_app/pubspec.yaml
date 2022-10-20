@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  animations: ^2.0.3
   badges: ^2.0.3
   carousel_slider: ^4.1.1
   cupertino_icons: ^1.0.2
@@ -36,7 +37,16 @@ dependencies:
   path_provider: ^2.0.11
   provider: ^6.0.3
   shared_preferences: ^2.0.15
-  sqflite: ^2.0.3+1
+  eva_icons_flutter: ^3.1.0
+  firebase_storage: ^10.3.10
+  firebase_core: ^1.24.0
+  dio: ^4.0.6
+  flutter_secure_storage: ^6.0.0
+  geolocator: ^9.0.0
+  pinput: ^2.2.12
+  image_picker: ^0.8.6
+  intl: 0.17.0
+  scrollable_positioned_list: ^0.3.5
 
 dev_dependencies:
   flutter_lints: ^1.0.0
@@ -55,34 +65,22 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - images/onboarding/logo.png
-    - images/onboarding/splash1.png
-    - images/categorys/cactus.png
-    - images/banners/banner1.png
-    - images/banners/banner2.png
-    - images/banners/banner3.jpg
-    - images/banners/banner4.jpg
-    - images/banners/banner5.jpg
-    - images/categorys/bonsai.png
-    - images/categorys/cactus.png
-    - images/categorys/decorative.png
-    - images/categorys/garden.png
-    - images/categorys/hanging.png
-    - images/categorys/office.jpg
-    - images/categorys/ornamental.png
-    - images/popular/popular1.png
-    - images/popular/popular2.png
-    - images/popular/popular3.png
-    - images/popular/popular4.png
-    - images/popular/popular5.jpg
-    - images/products/product1.png
-    - images/products/product2.png
-    - images/products/product3.jpg
-    - images/products/product4.png
-    - images/products/product5.png
-    - images/products/product6.png
-    - images/products/product7.png
-    - images/products/product8.png
+    - images/logo.png
+    - images/splash1.png
+    - images/banner1.png
+    - images/banner2.png
+    - images/banner3.jpg
+    - images/banner4.jpg
+    - images/banner5.jpg
+    - images/popular1.png
+    - images/popular2.png
+    - images/popular3.png
+    - images/popular4.png
+    - images/popular5.jpg
+    - images/noproduct.png
+    - images/default.png
+    - images/loader.gif
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

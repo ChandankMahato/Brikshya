@@ -12,7 +12,7 @@ class SplashContent {
 
 List<SplashContent> splashContents = [
   SplashContent(
-    image: 'images/onboarding/logo.png',
+    image: 'images/logo.png',
     title: 'Brikshya',
     description: 'Connected to soil',
   ),
